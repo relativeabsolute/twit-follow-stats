@@ -9,47 +9,12 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    margin: 8px 0;
-}
-
 p {
     margin: 0;
 }
 
 .spacer {
     flex: 1;
-}
-
-.toolbar {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    background-color: #1976d2;
-    color: white;
-    font-weight: 600;
-}
-
-.toolbar img {
-    margin: 0 16px;
-}
-
-.toolbar #twitter-logo {
-    height: 40px;
-    margin: 0 16px;
-}
-
-.toolbar #twitter-logo:hover {
-    opacity: 0.8;
 }
 
 .content {
@@ -61,15 +26,24 @@ p {
     align-items: center;
 }
 
-svg.material-icons {
-    height: 24px;
+.mat-button {
     width: auto;
 }
 
-svg.material-icons:not(:last-child) {
-    margin-right: 8px;
+.mat-button img {
+    height: 2.5em;
+    width: auto;
 }
 
 .card svg.material-icons path {
     fill: #888;
+}
+
+html,
+body {
+    height: 100%;
+}
+body {
+    margin: 0;
+    font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
