@@ -1,0 +1,7 @@
+<form [formGroup]="userHandleForm">
+    <mat-form-field appearance="fill">
+        <mat-label>Twitter user / handle</mat-label>
+        <input matInput formControlName="userHandle" required />
+    </mat-form-field>
+    <button mat-button aria-label="submit" type="submit" [disabled]="!userHandleForm.valid">Submit</button>
+</form>

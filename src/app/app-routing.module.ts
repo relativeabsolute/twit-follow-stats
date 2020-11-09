@@ -1,7 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-const routes: Routes = [];
+const routes: Routes = [
+    { path: 'follow-stats', loadChildren: () => import('./follow-stats/follow-stats.module').then((m) => m.FollowStatsModule) },
+    {
+        path: 'user-handle-form',
+        loadChildren: () => import('./user-handle-form/user-handle-form.module').then((m) => m.UserHandleFormModule),
+    },
+    { path: '', redirectTo: '/user-handle-form', pathMatch: 'full' },
+];
 
 @NgModule({
     imports: [RouterModule.forRoot(routes)],
