@@ -8,6 +8,7 @@ const routes: Routes = [
         loadChildren: () => import('./user-handle-form/user-handle-form.module').then((m) => m.UserHandleFormModule),
     },
     { path: '', redirectTo: '/user-handle-form', pathMatch: 'full' },
+    { path: 'user-search', loadChildren: () => import('./user-search/user-search.module').then(m => m.UserSearchModule) },
 ];
 
 @NgModule({

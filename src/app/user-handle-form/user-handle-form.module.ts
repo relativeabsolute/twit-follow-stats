@@ -8,6 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MaterialModule } from '../material/material.module';
 import { MatCardModule } from '@angular/material/card';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
     declarations: [UserHandleFormComponent],
@@ -20,6 +21,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         MaterialModule,
         FormsModule,
         ReactiveFormsModule,
+        FlexLayoutModule,
     ],
 })
 export class UserHandleFormModule {}

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-user-handle-form',
@@ -9,7 +10,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 export class UserHandleFormComponent implements OnInit {
     userHandleForm: FormGroup;
 
-    constructor(private fb: FormBuilder) {}
+    constructor(private fb: FormBuilder, private router: Router) {}
 
     ngOnInit(): void {
         this.userHandleForm = this.fb.group({
@@ -19,5 +20,6 @@ export class UserHandleFormComponent implements OnInit {
 
     onSubmit(): void {
         const userHandle = this.userHandleForm.value.userHandle;
+        this.router.navigate(['/user-search', userHandle]);
     }
 }

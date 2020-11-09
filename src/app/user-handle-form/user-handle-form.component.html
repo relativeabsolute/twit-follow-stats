@@ -6,12 +6,18 @@
         </mat-card-header>
         <form [formGroup]="userHandleForm" (submit)="onSubmit()">
             <mat-card-content>
-                <mat-form-field appearance="fill">
-                    <mat-label>Twitter user / handle</mat-label>
-                    <input matInput formControlName="userHandle" required />
-                </mat-form-field>
-
-                <button mat-button aria-label="submit" type="submit" [disabled]="!userHandleForm.valid">Submit</button>
+                <div gdAreas="input submit" gdColumns="auto auto" gdRows="auto auto" gdAlignColumns="center center">
+                    <!--TODO: autocomplete-->
+                    <div gdArea="input">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Twitter user / handle</mat-label>
+                            <input matInput formControlName="userHandle" required />
+                        </mat-form-field>
+                    </div>
+                    <div gdArea="submit">
+                        <button mat-button aria-label="submit" type="submit" [disabled]="!userHandleForm.valid">Submit</button>
+                    </div>
+                </div>
             </mat-card-content>
         </form>
     </mat-card>
