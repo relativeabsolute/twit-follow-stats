@@ -7,7 +7,6 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
     styleUrls: ['./user-handle-form.component.less'],
 })
 export class UserHandleFormComponent implements OnInit {
-    userHandle = '';
     userHandleForm: FormGroup;
 
     constructor(private fb: FormBuilder) {}
@@ -18,7 +17,7 @@ export class UserHandleFormComponent implements OnInit {
         });
     }
 
-    doChange(): void {
-        console.log(this.userHandle);
+    onSubmit(): void {
+        const userHandle = this.userHandleForm.value.userHandle;
     }
 }

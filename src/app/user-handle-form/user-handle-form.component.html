@@ -1,7 +1,18 @@
-<form [formGroup]="userHandleForm">
-    <mat-form-field appearance="fill">
-        <mat-label>Twitter user / handle</mat-label>
-        <input matInput formControlName="userHandle" required />
-    </mat-form-field>
-    <button mat-button aria-label="submit" type="submit" [disabled]="!userHandleForm.valid">Submit</button>
-</form>
+<div class="main-form">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Follow Stats</mat-card-title>
+            <mat-card-subtitle>Enter a username or handle you would like to know stats about.</mat-card-subtitle>
+        </mat-card-header>
+        <form [formGroup]="userHandleForm" (submit)="onSubmit()">
+            <mat-card-content>
+                <mat-form-field appearance="fill">
+                    <mat-label>Twitter user / handle</mat-label>
+                    <input matInput formControlName="userHandle" required />
+                </mat-form-field>
+
+                <button mat-button aria-label="submit" type="submit" [disabled]="!userHandleForm.valid">Submit</button>
+            </mat-card-content>
+        </form>
+    </mat-card>
+</div>
