@@ -1,3 +1,4 @@
+import { TwitterApiService } from './../shared/services/twitter-api.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
@@ -7,10 +8,12 @@ import { ActivatedRoute } from '@angular/router';
     styleUrls: ['./user-search.component.less'],
 })
 export class UserSearchComponent implements OnInit {
-    constructor(private route: ActivatedRoute) {}
+    constructor(private twitterApiService: TwitterApiService, private route: ActivatedRoute) {}
 
     ngOnInit(): void {
-        console.log(`User: ${this.route.snapshot.params['user']}`);
-        // TODO: authenticate app with twitter and search for users with the given name or handle
+        const userSearch = this.route.snapshot.params['user'];
+        this.twitterApiService.searchUsers(userSearch).subscribe((users) => {
+            console.log(JSON.stringify(users));
+        });
     }
 }
