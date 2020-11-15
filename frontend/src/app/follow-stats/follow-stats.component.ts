@@ -1,3 +1,4 @@
+import { TwitterApiService } from './../shared/services/twitter-api.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
@@ -7,9 +8,10 @@ import { ActivatedRoute } from '@angular/router';
     styleUrls: ['./follow-stats.component.less'],
 })
 export class FollowStatsComponent implements OnInit {
-    constructor(private activatedRoute: ActivatedRoute) {}
+    constructor(private twitterApiService: TwitterApiService, private activatedRoute: ActivatedRoute) {}
 
     ngOnInit(): void {
         const userId = +this.activatedRoute.snapshot.params.user_id;
+        this.twitterApiService.getFollowers(userId).subscribe(() => {});
     }
 }

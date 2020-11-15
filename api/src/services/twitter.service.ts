@@ -1,4 +1,4 @@
-import { Observable, from } from 'rxjs';
+import { Observable, from, of } from 'rxjs';
 import bent from 'bent';
 import querystring from 'querystring';
 
@@ -20,7 +20,7 @@ export class TwitterService {
 
     searchUsers(query: string): Observable<any> {
         if (!query) {
-            return null;
+            return of(null);
         }
 
         const encodedQuery = querystring.stringify({
@@ -30,15 +30,31 @@ export class TwitterService {
         return from(this.twitterApiV2(`/users/by?${encodedQuery}`, null, this.headers));
     }
 
-    getUser(userId: number): Observable<any> {
+    // TODO: handle cursors
+    getUserFollowers(userId: number): Observable<any> {
         if (!userId) {
-            return null;
+            return of(null);
         }
 
         const encodedQuery = querystring.stringify({
             skip_status: 1,
             userId,
         });
+        console.log(JSON.stringify(this.headers, null, '\t'));
         return from(this.twitterApiV1(`/followers/list.json?${encodedQuery}`, null, this.headers));
+    }
+
+    // TODO: handle cursors
+    getUserFollowing(userId: number): Observable<any> {
+        if (!userId) {
+            return of(null);
+        }
+
+        const encodedQuery = querystring.stringify({
+            skip_status: 1,
+            userId,
+        });
+
+        return from(this.twitterApiV1(`/friends/list.json?${encodedQuery}`, null, this.headers));
     }
 }
