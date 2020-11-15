@@ -1,5 +1,19 @@
+import { of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import * as express from 'express';
 import { TwitterService } from '../services/twitter.service';
+
+const handleError = (error: string[], response: any) => {
+    for (const line in error) {
+        if (error.hasOwnProperty(line)) {
+            console.error(error[line]);
+        }
+    }
+    response.status(500).send({
+        message: 'An error occurred when calling the Twitter API',
+    });
+    return of(null);
+};
 
 export const register = (app: express.Application) => {
     const twitterService = new TwitterService();
@@ -11,9 +25,14 @@ export const register = (app: express.Application) => {
                 message: 'Search query must not be empty.',
             });
         } else {
-            twitterService.searchUsers(q).subscribe((result) => {
-                res.send(result.data);
-            });
+            twitterService
+                .searchUsers(q)
+                .pipe(catchError((err) => handleError(err, res)))
+                .subscribe((result) => {
+                    if (result) {
+                        res.send(result.data);
+                    }
+                });
         }
     });
 
@@ -25,10 +44,15 @@ export const register = (app: express.Application) => {
                 message: 'User id must be defined.',
             });
         } else {
-            twitterService.getUserFollowers(userId).subscribe((result) => {
-                console.log(JSON.stringify(result, null, '\t'));
-                res.status(200);
-            });
+            twitterService
+                .getUserFollowers(userId)
+                .pipe(catchError((err) => handleError(err, res)))
+                .subscribe((result) => {
+                    if (result) {
+                        console.log(JSON.stringify(result, null, '\t'));
+                        res.status(200);
+                    }
+                });
         }
     });
 
@@ -40,6 +64,14 @@ export const register = (app: express.Application) => {
                 message: 'User id must be defined.',
             });
         } else {
+            twitterService
+                .getUserFollowing(userId)
+                .pipe(catchError((err) => handleError(err, res)))
+                .subscribe((result) => {
+                    if (result) {
+                        res.status(200);
+                    }
+                });
         }
     });
 };

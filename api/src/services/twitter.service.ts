@@ -1,4 +1,5 @@
-import { Observable, from, of } from 'rxjs';
+import { Observable, from, of, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import bent from 'bent';
 import querystring from 'querystring';
 
@@ -40,8 +41,10 @@ export class TwitterService {
             skip_status: 1,
             userId,
         });
-        console.log(JSON.stringify(this.headers, null, '\t'));
-        return from(this.twitterApiV1(`/followers/list.json?${encodedQuery}`, null, this.headers));
+        const endpoint = `/followers/list.json?${encodedQuery}`;
+        return from(this.twitterApiV1(endpoint, null, this.headers)).pipe(
+            catchError(this.handleError('getUserFollowers', `1.1${endpoint}`)),
+        );
     }
 
     // TODO: handle cursors
@@ -55,6 +58,18 @@ export class TwitterService {
             userId,
         });
 
-        return from(this.twitterApiV1(`/friends/list.json?${encodedQuery}`, null, this.headers));
+        const endpoint = `/friends/list.json?${encodedQuery}`;
+        return from(this.twitterApiV1(endpoint, null, this.headers)).pipe(
+            catchError(this.handleError('getUserFollowing', `1.1${endpoint}`)),
+        );
+    }
+
+    private handleError(operation: string, twitterEndpoint: string): (err: any) => Observable<never> {
+        return (err: any) => {
+            // TODO: more specific errors
+
+            const errorMessage = [`Error in ${operation}() calling Twitter API ${twitterEndpoint}`, `Detailed error: ${err}`];
+            return throwError(errorMessage);
+        };
     }
 }
