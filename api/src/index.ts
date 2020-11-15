@@ -21,5 +21,6 @@ api.register(app);
 twitterFollows.register(app);
 
 app.listen(port, () => {
+    // TODO: use a better logging solution
     console.log(`server started at http://localhost:${port}`);
 });

@@ -2,7 +2,8 @@ import * as express from 'express';
 import { TwitterService } from '../services/twitter.service';
 
 export const register = (app: express.Application) => {
-    app.get('/users', async (req, res) => {
+    const twitterService = new TwitterService();
+    app.get('/users', (req, res) => {
         const q = req.query.q as string;
 
         if (!q) {
@@ -10,9 +11,20 @@ export const register = (app: express.Application) => {
                 message: 'Search query must not be empty.',
             });
         } else {
-            const twitterService = new TwitterService();
-            const result = await twitterService.searchUsers(q);
-            res.send(result.data);
+            twitterService.searchUsers(q).subscribe((result) => {
+                res.send(result.data);
+            });
+        }
+    });
+
+    app.get('/users/:userId(\\d+)', (req, res) => {
+        const userId = +req.params.userId;
+
+        if (!userId) {
+            res.status(400).send({
+                message: 'User id must be defined.',
+            });
+        } else {
         }
     });
 };

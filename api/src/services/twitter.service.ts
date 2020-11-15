@@ -1,32 +1,44 @@
+import { Observable, from } from 'rxjs';
 import bent from 'bent';
 import querystring from 'querystring';
 
 export class TwitterService {
-    private readonly baseUrl = 'https://api.twitter.com/2';
-    private readonly twitterApi: bent.RequestFunction<bent.ValidResponse>;
+    private readonly baseUrl = 'https://api.twitter.com';
+    private readonly twitterApiV2: bent.RequestFunction<bent.ValidResponse>;
+    private readonly twitterApiV1: bent.RequestFunction<bent.ValidResponse>;
     private readonly twitterBearerToken: string;
+    private readonly headers: any;
 
     constructor() {
-        this.twitterApi = bent(this.baseUrl, 'GET', 'json', 200);
+        this.twitterApiV2 = bent(`${this.baseUrl}/2`, 'GET', 'json', 200);
+        this.twitterApiV1 = bent(`${this.baseUrl}/1.1`, 'GET', 'json', 200);
         this.twitterBearerToken = process.env.TWITTER_BEARER;
+        this.headers = {
+            Authorization: `Bearer ${this.twitterBearerToken}`,
+        };
     }
 
-    searchUsers(query: string): Promise<any> {
+    searchUsers(query: string): Observable<any> {
         if (!query) {
             return null;
         }
-        const headers = {
-            Authorization: `Bearer ${this.twitterBearerToken}`,
-        };
 
-        const encodedQuery = querystring.stringify(
-            {
-                usernames: query,
-                'user.fields': 'name,profile_image_url,username,id',
-            },
-            null,
-            null,
-        );
-        return this.twitterApi(`/users/by?${encodedQuery}`, null, headers);
+        const encodedQuery = querystring.stringify({
+            usernames: query,
+            'user.fields': 'name,profile_image_url,username,id',
+        });
+        return from(this.twitterApiV2(`/users/by?${encodedQuery}`, null, this.headers));
+    }
+
+    getUser(userId: number): Observable<any> {
+        if (!userId) {
+            return null;
+        }
+
+        const encodedQuery = querystring.stringify({
+            skip_status: 1,
+            userId,
+        });
+        return from(this.twitterApiV1(`/followers/list.json?${encodedQuery}`, null, this.headers));
     }
 }
