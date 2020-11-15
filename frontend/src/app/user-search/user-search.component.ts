@@ -14,10 +14,9 @@ export class UserSearchComponent implements OnInit {
     constructor(private twitterApiService: TwitterApiService, private route: ActivatedRoute) {}
 
     ngOnInit(): void {
-        const userSearch = this.route.snapshot.params['user'];
+        const userSearch = this.route.snapshot.params.user;
         this.twitterApiService.searchUsers(userSearch).subscribe((users) => {
             this.users = users;
-            console.log(JSON.stringify(this.users));
         });
     }
 }

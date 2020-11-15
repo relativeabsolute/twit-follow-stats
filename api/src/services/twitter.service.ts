@@ -18,7 +18,6 @@ export class TwitterService {
         const headers = {
             Authorization: `Bearer ${this.twitterBearerToken}`,
         };
-        console.log(JSON.stringify(headers));
 
         const encodedQuery = querystring.stringify(
             {
@@ -28,7 +27,6 @@ export class TwitterService {
             null,
             null,
         );
-        console.log(JSON.stringify(encodedQuery));
         return this.twitterApi(`/users/by?${encodedQuery}`, null, headers);
     }
 }

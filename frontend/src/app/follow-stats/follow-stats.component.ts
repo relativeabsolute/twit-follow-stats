@@ -10,7 +10,6 @@ export class FollowStatsComponent implements OnInit {
     constructor(private activatedRoute: ActivatedRoute) {}
 
     ngOnInit(): void {
-        const userId = +this.activatedRoute.snapshot.params['user_id'];
-        console.log(userId);
+        const userId = +this.activatedRoute.snapshot.params.user_id;
     }
 }

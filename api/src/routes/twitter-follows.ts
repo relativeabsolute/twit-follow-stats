@@ -12,7 +12,6 @@ export const register = (app: express.Application) => {
         } else {
             const twitterService = new TwitterService();
             const result = await twitterService.searchUsers(q);
-            console.log(JSON.stringify(result));
             res.send(result.data);
         }
     });
