@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { UserSearchComponent } from './user-search.component';
 
-const routes: Routes = [{ path: ':user', component: UserSearchComponent }];
+const routes: Routes = [{ path: ':user', component: UserSearchComponent, data: { animation: 'UserSearch' } }];
 
 @NgModule({
     imports: [RouterModule.forChild(routes)],

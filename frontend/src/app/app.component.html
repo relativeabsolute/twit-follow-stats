@@ -1,4 +1,4 @@
-<mat-toolbar>
+<mat-toolbar color="primary">
     <!--TODO: make welcome font bigger-->
     <a mat-button aria-label="Main logo" href="#" title="Welcome">Welcome</a>
     <span class="spacer"></span>
@@ -17,5 +17,8 @@
     </a>
 </mat-toolbar>
 
-<div class="content" role="main"></div>
-<router-outlet></router-outlet>
+<div class="content" role="main">
+    <div [@routeAnimations]="prepareRoute(outlet)">
+        <router-outlet #outlet="outlet"></router-outlet>
+    </div>
+</div>
