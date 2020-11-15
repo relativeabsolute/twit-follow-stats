@@ -1,0 +1,24 @@
+<mat-toolbar color="primary">
+    <!--TODO: make welcome font bigger-->
+    <a mat-button aria-label="Main logo" href="#" title="Welcome"><h1>Welcome</h1></a>
+    <span class="spacer"></span>
+    <a
+        mat-button
+        aria-label="Github repository"
+        target="_blank"
+        rel="noopener"
+        href="https://github.com/relativeabsolute/twit-follow-stats"
+        title="Github"
+    >
+        <img src="assets/GitHub-Mark-Light-32px.png" class="github-logo button-logo" /> Github
+    </a>
+    <a mat-button aria-label="Developer twitter" target="_blank" rel="noopener" href="https://twitter.com/rebby_the_nerd">
+        <img src="assets/Twitter_Logo_WhiteOnImage.svg" class="button-logo" /> @rebby_the_nerd
+    </a>
+</mat-toolbar>
+
+<div class="content" role="main">
+    <div [@routeAnimations]="prepareRoute(outlet)">
+        <router-outlet #outlet="outlet"></router-outlet>
+    </div>
+</div>

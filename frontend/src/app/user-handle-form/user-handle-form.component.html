@@ -1,0 +1,26 @@
+<div class="center-container">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Follow Stats</mat-card-title>
+            <mat-card-subtitle>Enter a username or handle you would like to know stats about.</mat-card-subtitle>
+        </mat-card-header>
+        <form [formGroup]="userHandleForm" (submit)="onSubmit()">
+            <mat-card-content>
+                <div gdAreas="input submit" gdColumns="auto auto" gdRows="auto auto" gdAlignColumns="center center">
+                    <!--TODO: autocomplete-->
+                    <div gdArea="input">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Twitter user / handle</mat-label>
+                            <input matInput formControlName="userHandle" required />
+                        </mat-form-field>
+                    </div>
+                    <div gdArea="submit">
+                        <button mat-raised-button aria-label="submit" color="primary" type="submit" [disabled]="!userHandleForm.valid">
+                            Submit
+                        </button>
+                    </div>
+                </div>
+            </mat-card-content>
+        </form>
+    </mat-card>
+</div>

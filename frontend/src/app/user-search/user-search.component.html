@@ -1,0 +1,13 @@
+<div class="center-container">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Users</mat-card-title>
+            <mat-card-subtitle>Click on a user to see their follow stats</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content *ngIf="users?.length">
+            <mat-nav-list>
+                <app-user-profile [user]="user" *ngFor="let user of users"></app-user-profile>
+            </mat-nav-list>
+        </mat-card-content>
+    </mat-card>
+</div>
