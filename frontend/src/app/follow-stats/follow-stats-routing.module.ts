@@ -3,10 +3,10 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { FollowStatsComponent } from './follow-stats.component';
 
-const routes: Routes = [{ path: '', component: FollowStatsComponent }];
+const routes: Routes = [{ path: ':user_id', component: FollowStatsComponent }];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule],
 })
-export class FollowStatsRoutingModule { }
+export class FollowStatsRoutingModule {}

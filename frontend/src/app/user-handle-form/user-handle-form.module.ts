@@ -6,7 +6,6 @@ import { UserHandleFormComponent } from './user-handle-form.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MaterialModule } from '../material/material.module';
-import { MatCardModule } from '@angular/material/card';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
@@ -17,7 +16,6 @@ import { FlexLayoutModule } from '@angular/flex-layout';
         UserHandleFormRoutingModule,
         MatFormFieldModule,
         MatInputModule,
-        MatCardModule,
         MaterialModule,
         FormsModule,
         ReactiveFormsModule,

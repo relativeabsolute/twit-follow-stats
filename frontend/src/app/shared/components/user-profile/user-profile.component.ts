@@ -1,5 +1,6 @@
 import { IUserObject } from './../../../interfaces/user-object';
 import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-user-profile',
@@ -10,7 +11,11 @@ import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core
 export class UserProfileComponent implements OnInit {
     @Input() user: IUserObject;
 
-    constructor() {}
+    constructor(private router: Router) {}
 
     ngOnInit(): void {}
+
+    getFollowStats(): void {
+        this.router.navigate(['/follow-stats', this.user.id]);
+    }
 }
