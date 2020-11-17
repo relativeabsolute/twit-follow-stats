@@ -37,7 +37,7 @@ export const register = (app: express.Application) => {
     });
 
     app.get('/users/:userId(\\d+)/followers', (req, res) => {
-        const userId = +req.params.userId;
+        const userId = req.params.userId;
 
         if (!userId) {
             res.status(400).send({
@@ -49,7 +49,6 @@ export const register = (app: express.Application) => {
                 .pipe(catchError((err) => handleError(err, res)))
                 .subscribe((result) => {
                     if (result) {
-                        console.log(JSON.stringify(result, null, '\t'));
                         res.status(200);
                     }
                 });
@@ -57,7 +56,7 @@ export const register = (app: express.Application) => {
     });
 
     app.get('/users/:userId(\\d+)/following', (req, res) => {
-        const userId = +req.params.userId;
+        const userId = req.params.userId;
 
         if (!userId) {
             res.status(400).send({

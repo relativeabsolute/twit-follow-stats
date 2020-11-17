@@ -32,15 +32,16 @@ export class TwitterService {
     }
 
     // TODO: handle cursors
-    getUserFollowers(userId: number): Observable<any> {
+    getUserFollowers(userId: string): Observable<any> {
         if (!userId) {
             return of(null);
         }
 
         const encodedQuery = querystring.stringify({
             skip_status: 1,
-            userId,
+            user_id: userId,
         });
+
         const endpoint = `/followers/list.json?${encodedQuery}`;
         return from(this.twitterApiV1(endpoint, null, this.headers)).pipe(
             catchError(this.handleError('getUserFollowers', `1.1${endpoint}`)),
@@ -48,14 +49,14 @@ export class TwitterService {
     }
 
     // TODO: handle cursors
-    getUserFollowing(userId: number): Observable<any> {
+    getUserFollowing(userId: string): Observable<any> {
         if (!userId) {
             return of(null);
         }
 
         const encodedQuery = querystring.stringify({
             skip_status: 1,
-            userId,
+            user_id: userId,
         });
 
         const endpoint = `/friends/list.json?${encodedQuery}`;

@@ -11,7 +11,7 @@ export class FollowStatsComponent implements OnInit {
     constructor(private twitterApiService: TwitterApiService, private activatedRoute: ActivatedRoute) {}
 
     ngOnInit(): void {
-        const userId = +this.activatedRoute.snapshot.params.user_id;
+        const userId = this.activatedRoute.snapshot.params.user_id;
         this.twitterApiService.getFollowers(userId).subscribe(() => {});
     }
 }
