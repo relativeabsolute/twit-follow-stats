@@ -19,6 +19,7 @@ export class TwitterService {
         };
     }
 
+    // TODO: stronger typing on apis
     searchUsers(query: string): Observable<any> {
         if (!query) {
             return of(null);
@@ -31,7 +32,10 @@ export class TwitterService {
         return from(this.twitterApiV2(`/users/by?${encodedQuery}`, null, this.headers));
     }
 
+
     // TODO: handle cursors
+    // TODO: get ids until a specified count is reached, then do calculations based on results
+    // need to pass out ids from one request and use that response's cursor to generate the next query
     getUserFollowers(userId: string): Observable<any> {
         if (!userId) {
             return of(null);
@@ -40,9 +44,10 @@ export class TwitterService {
         const encodedQuery = querystring.stringify({
             skip_status: 1,
             user_id: userId,
+            stringify_ids: true
         });
 
-        const endpoint = `/followers/list.json?${encodedQuery}`;
+        const endpoint = `/followers/ids.json?${encodedQuery}`;
         return from(this.twitterApiV1(endpoint, null, this.headers)).pipe(
             catchError(this.handleError('getUserFollowers', `1.1${endpoint}`)),
         );
@@ -59,7 +64,7 @@ export class TwitterService {
             user_id: userId,
         });
 
-        const endpoint = `/friends/list.json?${encodedQuery}`;
+        const endpoint = `/friends/ids.json?${encodedQuery}`;
         return from(this.twitterApiV1(endpoint, null, this.headers)).pipe(
             catchError(this.handleError('getUserFollowing', `1.1${endpoint}`)),
         );
