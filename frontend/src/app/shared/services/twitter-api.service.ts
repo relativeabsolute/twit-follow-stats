@@ -19,7 +19,7 @@ export class TwitterApiService {
         return this.http.get<IUserObject[]>(`${this.baseUrl}/users`, { params });
     }
 
-    getFollowers(userId: string): Observable<undefined> {
-        return this.http.get<undefined>(`${this.baseUrl}/users/${userId}/followers`);
+    getUserStats(userId: string): Observable<any> {
+        return this.http.get<any>(`${this.baseUrl}/users/${userId}`);
     }
 }

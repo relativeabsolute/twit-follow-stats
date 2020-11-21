@@ -1,5 +1,6 @@
-import { Observable, from, of, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { IStatsInternalResponse } from './../interfaces/stats-response';
+import { Observable, from, of, throwError, forkJoin } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import bent from 'bent';
 import querystring from 'querystring';
 
@@ -32,11 +33,7 @@ export class TwitterService {
         return from(this.twitterApiV2(`/users/by?${encodedQuery}`, null, this.headers));
     }
 
-
-    // TODO: handle cursors
-    // TODO: get ids until a specified count is reached, then do calculations based on results
-    // need to pass out ids from one request and use that response's cursor to generate the next query
-    getUserFollowers(userId: string): Observable<any> {
+    getUserStats(userId: string): Observable<IStatsInternalResponse> {
         if (!userId) {
             return of(null);
         }
@@ -44,30 +41,20 @@ export class TwitterService {
         const encodedQuery = querystring.stringify({
             skip_status: 1,
             user_id: userId,
-            stringify_ids: true
+            stringify_ids: true,
         });
 
-        const endpoint = `/followers/ids.json?${encodedQuery}`;
-        return from(this.twitterApiV1(endpoint, null, this.headers)).pipe(
-            catchError(this.handleError('getUserFollowers', `1.1${endpoint}`)),
-        );
-    }
-
-    // TODO: handle cursors
-    getUserFollowing(userId: string): Observable<any> {
-        if (!userId) {
-            return of(null);
-        }
-
-        const encodedQuery = querystring.stringify({
-            skip_status: 1,
-            user_id: userId,
-        });
-
-        const endpoint = `/friends/ids.json?${encodedQuery}`;
-        return from(this.twitterApiV1(endpoint, null, this.headers)).pipe(
-            catchError(this.handleError('getUserFollowing', `1.1${endpoint}`)),
-        );
+        const baseEndpoint = `ids.json?${encodedQuery}`;
+        const followersEndpoint = `/followers/${baseEndpoint}`;
+        const followingEndpoint = `/friends/${baseEndpoint}`;
+        return forkJoin([
+            from(this.twitterApiV1(followersEndpoint, null, this.headers)).pipe(
+                catchError(this.handleError('getUserFollowers', `1.1${followersEndpoint}`)),
+            ),
+            from(this.twitterApiV1(followingEndpoint, null, this.headers)).pipe(
+                catchError(this.handleError('getUserFollowing', `1.1${followingEndpoint}`)),
+            ),
+        ]).pipe(map(([followers, following]) => ({ followers, following })));
     }
 
     private handleError(operation: string, twitterEndpoint: string): (err: any) => Observable<never> {

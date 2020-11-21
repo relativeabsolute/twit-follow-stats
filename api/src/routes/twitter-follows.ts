@@ -1,7 +1,9 @@
+import { IStatsInternalResponse, IStatsResponse } from './../interfaces/stats-response';
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import * as express from 'express';
 import { TwitterService } from '../services/twitter.service';
+import underscore from 'underscore';
 
 const handleError = (error: string[], response: any) => {
     for (const line in error) {
@@ -36,7 +38,7 @@ export const register = (app: express.Application) => {
         }
     });
 
-    app.get('/users/:userId(\\d+)/followers', (req, res) => {
+    app.get('/users/:userId(\\d+)', (req, res) => {
         const userId = req.params.userId;
 
         if (!userId) {
@@ -45,30 +47,20 @@ export const register = (app: express.Application) => {
             });
         } else {
             twitterService
-                .getUserFollowers(userId)
+                .getUserStats(userId)
                 .pipe(catchError((err) => handleError(err, res)))
-                .subscribe((result) => {
+                .subscribe((result: IStatsInternalResponse) => {
                     if (result) {
-                        res.status(200);
-                    }
-                });
-        }
-    });
-
-    app.get('/users/:userId(\\d+)/following', (req, res) => {
-        const userId = req.params.userId;
-
-        if (!userId) {
-            res.status(400).send({
-                message: 'User id must be defined.',
-            });
-        } else {
-            twitterService
-                .getUserFollowing(userId)
-                .pipe(catchError((err) => handleError(err, res)))
-                .subscribe((result) => {
-                    if (result) {
-                        res.status(200);
+                        // other properties: next_cursor, next_cursor_str, previous_cursor, previous_cursor_str, total_count
+                        const followerIds: string[] = result.followers.ids;
+                        const followingIds: string[] = result.following.ids;
+                        const mutualIds: string[] = underscore.intersection(followerIds, followingIds);
+                        const statsResponse: IStatsResponse = {
+                            followerCount: followerIds.length,
+                            followingCount: followingIds.length,
+                            mutualCount: mutualIds.length,
+                        };
+                        res.send(statsResponse);
                     }
                 });
         }
