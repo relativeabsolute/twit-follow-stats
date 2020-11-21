@@ -1,3 +1,4 @@
+import { IStatsObject } from './../../interfaces/stats-object';
 import { environment } from './../../../environments/environment';
 import { IUserObject } from './../../interfaces/user-object';
 import { Injectable } from '@angular/core';
@@ -19,7 +20,7 @@ export class TwitterApiService {
         return this.http.get<IUserObject[]>(`${this.baseUrl}/users`, { params });
     }
 
-    getUserStats(userId: string): Observable<any> {
-        return this.http.get<any>(`${this.baseUrl}/users/${userId}`);
+    getUserStats(userId: string): Observable<IStatsObject> {
+        return this.http.get<IStatsObject>(`${this.baseUrl}/users/${userId}`);
     }
 }
