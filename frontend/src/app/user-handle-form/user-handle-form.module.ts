@@ -1,3 +1,4 @@
+import { SharedModule } from './../shared/shared.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -7,7 +8,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MaterialModule } from '../material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
     declarations: [UserHandleFormComponent],
@@ -19,7 +19,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
         MaterialModule,
         FormsModule,
         ReactiveFormsModule,
-        FlexLayoutModule,
+        SharedModule,
     ],
 })
 export class UserHandleFormModule {}
