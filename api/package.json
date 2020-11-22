@@ -4,9 +4,16 @@
     "description": "",
     "main": "dist/index.js",
     "scripts": {
-        "start": "node -r ts-node/register src/index.ts",
+        "start": "npm run clean && npm run build-static-files && npm run move-static-files && npm run run-server",
+        "clean": "rimraf ./public",
+        "run-server": "ts-node src/index.ts",
         "test": "echo \"Error: no test specified\" && exit 1",
-        "lint": "tslint src/**/*.ts"
+        "build-static-files": "cd ../frontend && npm run build && cd ../api",
+        "move-static-files": "mv ../frontend/dist ./public",
+        "lint": "tslint src/**/*.ts",
+        "start:prod": "npm run clean && npm run build-static-files:prod && npm run move-static-files && npm run run-server:prod",
+        "build-static-files:prod": "cd ../frontend && npm run build:prod && cd ../api",
+        "run-server:prod": "ts-node -T src/index.ts"
     },
     "keywords": [],
     "author": "Johan Burke",
@@ -28,6 +35,7 @@
         "@types/node": "^14.14.7",
         "@types/underscore": "^1.10.24",
         "codelyzer": "^6.0.1",
+        "rimraf": "^3.0.2",
         "tslint": "^6.1.3",
         "typescript": "^4.0.5"
     }
