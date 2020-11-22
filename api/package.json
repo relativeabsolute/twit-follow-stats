@@ -4,7 +4,8 @@
     "description": "",
     "main": "dist/index.js",
     "scripts": {
-        "start": "npm run clean && npm run build-static-files && npm run move-static-files && npm run run-server",
+        "start": "npm run build && npm run run-server",
+        "build": "npm run clean && npm run build-static-files && npm run move-static-files",
         "clean": "rimraf ./public",
         "run-server": "ts-node src/index.ts",
         "test": "echo \"Error: no test specified\" && exit 1",
