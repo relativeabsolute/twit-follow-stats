@@ -6,11 +6,14 @@
     "scripts": {
         "start": "npm run clean && npm run build-static-files && npm run move-static-files && npm run run-server",
         "clean": "rimraf ./public",
-        "run-server": "node -r ts-node/register src/index.ts",
+        "run-server": "ts-node src/index.ts",
         "test": "echo \"Error: no test specified\" && exit 1",
         "build-static-files": "cd ../frontend && npm run build && cd ../api",
         "move-static-files": "mv ../frontend/dist ./public",
-        "lint": "tslint src/**/*.ts"
+        "lint": "tslint src/**/*.ts",
+        "start:prod": "npm run clean && npm run build-static-files:prod && npm run move-static-files && npm run run-server:prod",
+        "build-static-files:prod": "cd ../frontend && npm run build:prod && cd ../api",
+        "run-server:prod": "ts-node -T src/index.ts"
     },
     "keywords": [],
     "author": "Johan Burke",
