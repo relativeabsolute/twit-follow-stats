@@ -1,0 +1,13 @@
+{
+    "name": "twit-follow-stats",
+    "version": "0.1.0",
+    "author": "Johan Burke",
+    "license": "MIT",
+    "scripts": {
+        "setup-deps": "concurrently \"cd ./frontend && npm i\" \"cd ./api && npm i\"",
+        "build": "cd ./api && npm run build"
+    },
+    "dependencies": {
+        "concurrently": "^5.3.0"
+    }
+}
