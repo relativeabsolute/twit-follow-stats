@@ -11,7 +11,7 @@
         "clean": "rimraf ./dist",
         "run-server": "node ./dist/index.js",
         "test": "echo \"Error: no test specified\" && exit 1",
-        "build-static-files": "cd ../frontend && npm run build && cd ../api",
+        "build-static-files": "cd ../frontend && npm run build:staging && cd ../api",
         "move-static-files": "mv ../frontend/dist ./dist/public",
         "lint": "tslint src/**/*.ts",
         "build-static-files:prod": "cd ../frontend && npm run build:prod && cd ../api"
