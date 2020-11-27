@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import { urlencoded } from 'body-parser';
 import methodOverride from 'method-override';
+import { errorHandlers } from './middleware';
 
 dotenv.config();
 
@@ -24,6 +25,12 @@ app.use(
     }),
 );
 app.use(methodOverride());
+
+// TODO: wrap these in one middleware
+app.use(errorHandlers.errorLogger);
+app.use(errorHandlers.clientErrorHandler);
+app.use(errorHandlers.catchAllErrorHandler);
+
 app.use(cors(corsOptions));
 app.use(express.static('./dist/public'));
 
