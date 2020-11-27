@@ -1,3 +1,4 @@
+import { MatListModule } from '@angular/material/list';
 import { SharedModule } from './../shared/shared.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -8,6 +9,6 @@ import { MaterialModule } from '../material/material.module';
 
 @NgModule({
     declarations: [FollowStatsComponent],
-    imports: [CommonModule, FollowStatsRoutingModule, MaterialModule, SharedModule],
+    imports: [CommonModule, FollowStatsRoutingModule, MaterialModule, MatListModule, SharedModule],
 })
 export class FollowStatsModule {}

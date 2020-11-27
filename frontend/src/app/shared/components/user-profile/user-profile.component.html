@@ -1,4 +1,4 @@
-<mat-list-item *ngIf="user" (click)="getFollowStats()">
+<mat-list-item *ngIf="user" (click)="emitProfileClick()">
     <img matListAvatar [src]="user.profile_image_url" />
     <h3 matLine>{{ user.name }}</h3>
     <p matLine>{{ user.username }}</p>
