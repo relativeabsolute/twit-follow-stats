@@ -1,7 +1,9 @@
 <mat-toolbar color="primary">
     <!--TODO: make welcome font bigger-->
     <a mat-button aria-label="Main logo" href="#" title="Welcome"><h1>Welcome</h1></a>
-    <a mat-button aria-label="About" routerLink="/about">About</a>
+    <a mat-icon-button aria-label="About" routerLink="/about"
+        ><mat-icon class="mr-2">info</mat-icon><span class="nav-link-text">About</span></a
+    >
     <span class="spacer"></span>
     <a
         mat-button
@@ -11,10 +13,10 @@
         href="https://github.com/relativeabsolute/twit-follow-stats"
         title="Github"
     >
-        <img src="assets/GitHub-Mark-Light-32px.png" class="github-logo button-logo" /> Github
+        <img src="assets/GitHub-Mark-Light-32px.png" class="github-logo button-logo" /> <span class="nav-link-text">Github</span>
     </a>
     <a mat-button aria-label="Developer twitter" target="_blank" rel="noopener" href="https://twitter.com/johanb_dev">
-        <img src="assets/Twitter_Logo_WhiteOnImage.svg" class="button-logo" /> @johanb_dev
+        <img src="assets/Twitter_Logo_WhiteOnImage.svg" class="twitter-logo button-logo" /> <span class="nav-link-text">@johanb_dev</span>
     </a>
 </mat-toolbar>
 
