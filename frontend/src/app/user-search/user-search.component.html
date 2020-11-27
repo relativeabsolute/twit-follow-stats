@@ -6,8 +6,11 @@
         </mat-card-header>
         <mat-card-content *ngIf="users?.length">
             <mat-nav-list>
-                <app-user-profile [user]="user" *ngFor="let user of users"></app-user-profile>
+                <app-user-profile [user]="user" (profileClicked)="onProfileClicked($event)" *ngFor="let user of users"></app-user-profile>
             </mat-nav-list>
         </mat-card-content>
+        <mat-card-actions>
+            <app-back-button [destination]="'/user-handle-form'"></app-back-button>
+        </mat-card-actions>
     </mat-card>
 </div>

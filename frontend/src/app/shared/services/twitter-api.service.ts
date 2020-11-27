@@ -3,7 +3,7 @@ import { environment } from './../../../environments/environment';
 import { IUserObject } from './../../interfaces/user-object';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
     providedIn: 'root',
@@ -11,8 +11,11 @@ import { Observable } from 'rxjs';
 export class TwitterApiService {
     private baseUrl: string;
 
+    currentTwitterUser: BehaviorSubject<IUserObject>;
+
     constructor(private http: HttpClient) {
         this.baseUrl = environment.baseUrl;
+        this.currentTwitterUser = new BehaviorSubject(null);
     }
 
     searchUsers(query: string): Observable<IUserObject[]> {
@@ -22,5 +25,9 @@ export class TwitterApiService {
 
     getUserStats(userId: string): Observable<IStatsObject> {
         return this.http.get<IStatsObject>(`${this.baseUrl}/users/${userId}`);
+    }
+
+    setCurrentUser(user: IUserObject): void {
+        this.currentTwitterUser.next(user);
     }
 }

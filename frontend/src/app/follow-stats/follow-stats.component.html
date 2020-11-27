@@ -5,17 +5,23 @@
             <mat-card-subtitle> Percentage of users followed / following who are mutuals. </mat-card-subtitle>
         </mat-card-header>
         <mat-card-content *ngIf="stats">
-            <div gdAreas="profile profile | followers following">
-                <div gdArea="profile">
-                    <app-user-profile></app-user-profile>
-                </div>
+            <div fxLayout="row">
+                <div fxFlex="20"></div>
+                <mat-list fxFlex="60" fxLayout="row" fxLayoutAlign="center center">
+                    <app-user-profile [user]="twitterUser"></app-user-profile>
+                </mat-list>
+                <div fxFlex="20"></div>
+            </div>
+            <div fxLayout="row">
                 <app-percentage-display
-                    gdArea="followers"
+                    fxFlex="45"
                     [numerator]="stats.mutualCount"
                     [denominator]="stats.followerCount"
                     [label]="'Followers'"
                 ></app-percentage-display>
+                <div fxFlex="10"></div>
                 <app-percentage-display
+                    fxFlex="45"
                     gdArea="following"
                     [numerator]="stats.mutualCount"
                     [denominator]="stats.followingCount"
@@ -24,5 +30,8 @@
                 </app-percentage-display>
             </div>
         </mat-card-content>
+        <mat-card-actions>
+            <app-back-button [destination]="'/user-search/' + userHandle" *ngIf="twitterUser"></app-back-button>
+        </mat-card-actions>
     </mat-card>
 </div>
