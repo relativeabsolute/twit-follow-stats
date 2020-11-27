@@ -12,23 +12,14 @@
                 </mat-list>
                 <div fxFlex="20"></div>
             </div>
-            <div fxLayout="row">
-                <app-percentage-display
-                    fxFlex="45"
-                    [numerator]="stats.mutualCount"
-                    [denominator]="stats.followerCount"
-                    [label]="'Followers'"
-                ></app-percentage-display>
-                <div fxFlex="10"></div>
-                <app-percentage-display
-                    fxFlex="45"
-                    gdArea="following"
-                    [numerator]="stats.mutualCount"
-                    [denominator]="stats.followingCount"
-                    [label]="'Following'"
-                >
-                </app-percentage-display>
-            </div>
+            <mat-tab-group>
+                <mat-tab label="Basic">
+                    <app-basic-stats [stats]="stats"></app-basic-stats>
+                </mat-tab>
+                <mat-tab label="Advanced">
+                    <app-advanced-stats></app-advanced-stats>
+                </mat-tab>
+            </mat-tab-group>
         </mat-card-content>
         <mat-card-actions>
             <app-back-button [destination]="'/user-search/' + userHandle" *ngIf="twitterUser"></app-back-button>

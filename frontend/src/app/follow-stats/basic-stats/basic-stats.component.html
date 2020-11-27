@@ -1,0 +1,19 @@
+<ng-container>
+    <div fxLayout="row" class="mt-2">
+        <app-percentage-display
+            fxFlex="45"
+            [numerator]="stats.mutualCount"
+            [denominator]="stats.followerCount"
+            [label]="'Followers'"
+        ></app-percentage-display>
+        <div fxFlex="10"></div>
+        <app-percentage-display
+            fxFlex="45"
+            gdArea="following"
+            [numerator]="stats.mutualCount"
+            [denominator]="stats.followingCount"
+            [label]="'Following'"
+        >
+        </app-percentage-display>
+    </div>
+</ng-container>
