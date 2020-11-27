@@ -6,16 +6,15 @@
     "scripts": {
         "start": "npm run run-server",
         "start-local": "npm run build && npm run run-server",
-        "build": "npm run clean && npm run build-static-files && npm run move-static-files",
-        "clean": "rimraf ./public",
-        "run-server": "ts-node src/index.ts",
+        "build": "npm run clean && concurrently \"npm run build-static-files\" \"npm run build-server\" && npm run move-static-files",
+        "build-server": "tsc",
+        "clean": "rimraf ./dist",
+        "run-server": "node ./dist/index.js",
         "test": "echo \"Error: no test specified\" && exit 1",
         "build-static-files": "cd ../frontend && npm run build && cd ../api",
-        "move-static-files": "mv ../frontend/dist ./public",
+        "move-static-files": "mv ../frontend/dist ./dist/public",
         "lint": "tslint src/**/*.ts",
-        "start:prod": "npm run clean && npm run build-static-files:prod && npm run move-static-files && npm run run-server:prod",
-        "build-static-files:prod": "cd ../frontend && npm run build:prod && cd ../api",
-        "run-server:prod": "ts-node -T src/index.ts"
+        "build-static-files:prod": "cd ../frontend && npm run build:prod && cd ../api"
     },
     "keywords": [],
     "author": "Johan Burke",
@@ -23,11 +22,11 @@
     "dependencies": {
         "@reactivex/rxjs": "^6.6.3",
         "bent": "^7.3.12",
+        "concurrently": "^5.3.0",
         "cors": "^2.8.5",
         "dotenv": "^8.2.0",
         "express": "^4.17.1",
         "rxjs": "^6.6.3",
-        "ts-node": "^9.0.0",
         "underscore": "^1.11.0"
     },
     "devDependencies": {

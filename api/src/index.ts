@@ -1,5 +1,5 @@
 import express from 'express';
-import { api, twitterFollows } from './routes';
+import { twitterFollows } from './routes';
 import dotenv from 'dotenv';
 import cors from 'cors';
 
@@ -15,9 +15,7 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-app.use(express.static('public'));
-
-api.register(app);
+app.use(express.static('./dist/public'));
 
 twitterFollows.register(app);
 
