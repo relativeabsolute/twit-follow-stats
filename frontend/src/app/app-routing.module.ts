@@ -10,6 +10,7 @@ const routes: Routes = [
     { path: '', redirectTo: '/user-handle-form', pathMatch: 'full' },
     { path: 'user-search', loadChildren: () => import('./user-search/user-search.module').then(m => m.UserSearchModule) },
     { path: 'shared', loadChildren: () => import('./shared/shared.module').then(m => m.SharedModule) },
+    { path: 'about', loadChildren: () => import('./about/about.module').then(m => m.AboutModule) },
 ];
 
 @NgModule({
