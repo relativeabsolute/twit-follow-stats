@@ -13,6 +13,10 @@ export class FollowStatsComponent implements OnInit {
     stats: IStatsObject;
     twitterUser: IUserObject;
 
+    get userHandle(): string {
+        return this.twitterUser.username;
+    }
+
     constructor(private twitterApiService: TwitterApiService, private activatedRoute: ActivatedRoute) {}
 
     ngOnInit(): void {

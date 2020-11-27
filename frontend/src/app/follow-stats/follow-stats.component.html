@@ -30,5 +30,8 @@
                 </app-percentage-display>
             </div>
         </mat-card-content>
+        <mat-card-actions>
+            <app-back-button [destination]="'/user-search/' + userHandle" *ngIf="twitterUser"></app-back-button>
+        </mat-card-actions>
     </mat-card>
 </div>
