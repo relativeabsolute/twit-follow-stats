@@ -4,6 +4,7 @@ import { catchError } from 'rxjs/operators';
 import * as express from 'express';
 import { TwitterService } from '../services/twitter.service';
 import underscore from 'underscore';
+import { IAdvancedStatsInternalResponse } from 'interfaces/advanced-stats-response';
 
 const handleError = (error: string[], response: any) => {
     for (const line in error) {
@@ -38,7 +39,7 @@ export const register = (app: express.Application) => {
         }
     });
 
-    app.get('/users/:userId(\\d+)', (req, res) => {
+    app.get('/users/:userId(\\d+)/basic', (req, res) => {
         const userId = req.params.userId;
 
         if (!userId) {
@@ -61,6 +62,25 @@ export const register = (app: express.Application) => {
                             mutualCount: mutualIds.length,
                         };
                         res.send(statsResponse);
+                    }
+                });
+        }
+    });
+
+    app.get('users/:userId(\\d+)/advanced', (req, res) => {
+        const userId = req.params.userId;
+
+        if (!userId) {
+            res.status(400).send({
+                message: 'User id must be defined',
+            });
+        } else {
+            twitterService
+                .getUserAdvancedStats(userId)
+                .pipe(catchError((err) => handleError(err, res)))
+                .subscribe((result: IAdvancedStatsInternalResponse) => {
+                    if (result) {
+                        // TODO: do stuff
                     }
                 });
         }

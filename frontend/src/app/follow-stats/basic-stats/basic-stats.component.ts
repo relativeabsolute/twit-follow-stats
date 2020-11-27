@@ -1,5 +1,4 @@
 import { IStatsObject } from './../../interfaces/stats-object';
-import { IUserObject } from './../../interfaces/user-object';
 import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
 
 @Component({

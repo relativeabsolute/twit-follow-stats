@@ -1,3 +1,4 @@
+import { IAdvancedStatsObject } from './../../interfaces/advanced-stats-object';
 import { IStatsObject } from './../../interfaces/stats-object';
 import { environment } from './../../../environments/environment';
 import { IUserObject } from './../../interfaces/user-object';
@@ -24,7 +25,11 @@ export class TwitterApiService {
     }
 
     getUserStats(userId: string): Observable<IStatsObject> {
-        return this.http.get<IStatsObject>(`${this.baseUrl}/users/${userId}`);
+        return this.http.get<IStatsObject>(`${this.baseUrl}/users/${userId}/basic`);
+    }
+
+    getUserAdvancedStats(userId: string): Observable<IAdvancedStatsObject> {
+        return this.http.get<IAdvancedStatsObject>(`${this.baseUrl}/users/${userId}/advanced`);
     }
 
     setCurrentUser(user: IUserObject): void {
