@@ -34,7 +34,7 @@ jobs:
         envkey_NODE_ENV: development
         envkey_TWITTER_BEARER: ${{ secrets.TWITTER_BEARER }}
         envkey_CORS_ORIGIN: https://twit-follow-stats-staging.azurewebsites.net
-        directory: api/dist
+        directory: api
 
     - name: 'Deploy to Azure Web App'
       uses: azure/webapps-deploy@v2
