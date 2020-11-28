@@ -5,4 +5,19 @@ export interface IAdvancedStatsInternalResponse {
     following: IUserObject[];
 }
 
-export interface IAdvancedStatsResponse {}
+export interface IBooleanCount {
+    are: number;
+    areNot: number;
+}
+
+export interface IAdvancedGroupStats {
+    averageFollowersCount: number;
+    averageFollowingCount: number;
+    protectedCount: IBooleanCount;
+    verifiedCount: IBooleanCount;
+}
+
+export interface IAdvancedStatsResponse {
+    followerStats: IAdvancedGroupStats;
+    followingStats: IAdvancedGroupStats;
+}

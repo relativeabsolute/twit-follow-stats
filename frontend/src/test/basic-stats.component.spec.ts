@@ -2,6 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BasicStatsComponent } from '../app/follow-stats/basic-stats/basic-stats.component';
 
+import {} from 'jasmine';
+
 describe('BasicStatsComponent', () => {
     let component: BasicStatsComponent;
     let fixture: ComponentFixture<BasicStatsComponent>;

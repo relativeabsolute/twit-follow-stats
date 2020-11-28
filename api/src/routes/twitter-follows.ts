@@ -1,10 +1,11 @@
 import { IStatsInternalResponse, IStatsResponse } from './../interfaces/stats-response';
+import { IUserObject } from './../interfaces/user-object';
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import * as express from 'express';
 import { TwitterService } from '../services/twitter.service';
 import underscore from 'underscore';
-import { IAdvancedStatsInternalResponse } from 'interfaces/advanced-stats-response';
+import { IAdvancedGroupStats, IAdvancedStatsInternalResponse, IAdvancedStatsResponse } from './../interfaces/advanced-stats-response';
 
 const handleError = (error: string[], response: any) => {
     for (const line in error) {
@@ -16,6 +17,38 @@ const handleError = (error: string[], response: any) => {
         message: 'An error occurred when calling the Twitter API',
     });
     return of(null);
+};
+
+const mapUserObjectToStatSlice = (numUsers: number) => {
+    return (userObject: IUserObject) => {
+        return {
+            averageFollowersCount: userObject.followers_count / numUsers,
+            averageFollowingCount: userObject.friends_count / numUsers,
+            protectedCount: {
+                are: userObject.protected ? 1 / numUsers : 0,
+                areNot: !userObject.protected ? 1 / numUsers : 0,
+            },
+            verifiedCount: {
+                are: userObject.verified ? 1 / numUsers : 0,
+                areNot: !userObject.verified ? 1 / numUsers : 0,
+            },
+        };
+    };
+};
+
+const reduceSlicesToStats = (prevValue: IAdvancedGroupStats, currValue: IAdvancedGroupStats) => {
+    return {
+        averageFollowersCount: prevValue.averageFollowersCount + currValue.averageFollowersCount,
+        averageFollowingCount: prevValue.averageFollowingCount + currValue.averageFollowingCount,
+        protectedCount: {
+            are: prevValue.protectedCount.are + currValue.protectedCount.are,
+            areNot: prevValue.protectedCount.areNot + currValue.protectedCount.areNot,
+        },
+        verifiedCount: {
+            are: prevValue.verifiedCount.are + currValue.verifiedCount.are,
+            areNot: prevValue.verifiedCount.areNot + currValue.verifiedCount.areNot,
+        },
+    };
 };
 
 export const register = (app: express.Application) => {
@@ -80,7 +113,25 @@ export const register = (app: express.Application) => {
                 .pipe(catchError((err) => handleError(err, res)))
                 .subscribe((result: IAdvancedStatsInternalResponse) => {
                     if (result) {
-                        // TODO: do stuff
+                        const responseData: IAdvancedStatsResponse = {
+                            followerStats: result.followers
+                                .map(mapUserObjectToStatSlice(result.followers.length))
+                                .reduce(reduceSlicesToStats, {
+                                    averageFollowersCount: 0,
+                                    averageFollowingCount: 0,
+                                    protectedCount: { are: 0, areNot: 0 },
+                                    verifiedCount: { are: 0, areNot: 0 },
+                                }),
+                            followingStats: result.following
+                                .map(mapUserObjectToStatSlice(result.following.length))
+                                .reduce(reduceSlicesToStats, {
+                                    averageFollowersCount: 0,
+                                    averageFollowingCount: 0,
+                                    protectedCount: { are: 0, areNot: 0 },
+                                    verifiedCount: { are: 0, areNot: 0 },
+                                }),
+                        };
+                        res.send(responseData);
                     }
                 });
         }
