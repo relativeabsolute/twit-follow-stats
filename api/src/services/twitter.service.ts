@@ -66,6 +66,7 @@ export class TwitterService {
         }
 
         const encodedQuery = querystring.stringify({
+            user_id: userId,
             count: 200,
             skip_status: 1,
         });
@@ -82,7 +83,10 @@ export class TwitterService {
                 catchError(this.handleError('getUserFollowingList', `1.1${followingEndpoint}`)),
             ),
         ]).pipe(
-            map(([followers, following]) => ({ followers: followers.users as IUserObject[], following: following.users as IUserObject[] })),
+            map(([followers, following]) => ({
+                followers: (followers as any).users as IUserObject[],
+                following: (following as any).users as IUserObject[],
+            })),
         );
     }
 

@@ -1,4 +1,5 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
+import { IAdvancedStatsObject } from '../../interfaces/advanced-stats-object';
 
 @Component({
     selector: 'app-advanced-stats',
@@ -7,6 +8,8 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AdvancedStatsComponent implements OnInit {
+    @Input() advancedStats: IAdvancedStatsObject;
+
     constructor() {}
 
     ngOnInit(): void {}

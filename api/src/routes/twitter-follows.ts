@@ -100,7 +100,7 @@ export const register = (app: express.Application) => {
         }
     });
 
-    app.get('users/:userId(\\d+)/advanced', (req, res) => {
+    app.get('/users/:userId(\\d+)/advanced', (req, res) => {
         const userId = req.params.userId;
 
         if (!userId) {

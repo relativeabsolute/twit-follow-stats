@@ -3,6 +3,7 @@ import { IStatsObject } from './../interfaces/stats-object';
 import { TwitterApiService } from './../shared/services/twitter-api.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { IAdvancedStatsObject } from '../interfaces/advanced-stats-object';
 
 @Component({
     selector: 'app-follow-stats',
@@ -11,6 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class FollowStatsComponent implements OnInit {
     stats: IStatsObject;
+    advancedStats: IAdvancedStatsObject;
     twitterUser: IUserObject;
 
     get userHandle(): string {
@@ -24,6 +26,9 @@ export class FollowStatsComponent implements OnInit {
         this.twitterApiService.getUserStats(userId).subscribe((statsObject) => {
             this.twitterUser = this.twitterApiService.currentTwitterUser.getValue();
             this.stats = statsObject;
+        });
+        this.twitterApiService.getUserAdvancedStats(userId).subscribe((advancedStats) => {
+            this.advancedStats = advancedStats;
         });
     }
 }
