@@ -1,1 +1,9 @@
-<p>advanced-stats works!</p>
+<button mat-button [matMenuTriggerFor]="menu"><mat-icon>keyboard_arrow_down</mat-icon><span>Statistics Type</span></button>
+<mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="statType = 'general'">General</button>
+    <button mat-menu-item (click)="statType = 'demographics'">Demographics</button>
+</mat-menu>
+<ng-container [ngSwitch]="statType">
+    <app-advanced-general-stats *ngSwitchCase="statType === 'general'"></app-advanced-general-stats>
+    <app-advanced-demographic-stats *ngSwitchCase="statType === 'demographics'"></app-advanced-demographic-stats>
+</ng-container>

@@ -22,15 +22,17 @@ const handleError = (error: string[], response: any) => {
 const mapUserObjectToStatSlice = (numUsers: number) => {
     return (userObject: IUserObject) => {
         return {
-            averageFollowersCount: userObject.followers_count / numUsers,
-            averageFollowingCount: userObject.friends_count / numUsers,
-            protectedCount: {
-                are: userObject.protected ? 1 / numUsers : 0,
-                areNot: !userObject.protected ? 1 / numUsers : 0,
-            },
-            verifiedCount: {
-                are: userObject.verified ? 1 / numUsers : 0,
-                areNot: !userObject.verified ? 1 / numUsers : 0,
+            general: {
+                averageFollowersCount: userObject.followers_count / numUsers,
+                averageFollowingCount: userObject.friends_count / numUsers,
+                protectedCount: {
+                    are: userObject.protected ? 1 / numUsers : 0,
+                    areNot: !userObject.protected ? 1 / numUsers : 0,
+                },
+                verifiedCount: {
+                    are: userObject.verified ? 1 / numUsers : 0,
+                    areNot: !userObject.verified ? 1 / numUsers : 0,
+                },
             },
         };
     };
@@ -38,16 +40,19 @@ const mapUserObjectToStatSlice = (numUsers: number) => {
 
 const reduceSlicesToStats = (prevValue: IAdvancedGroupStats, currValue: IAdvancedGroupStats) => {
     return {
-        averageFollowersCount: prevValue.averageFollowersCount + currValue.averageFollowersCount,
-        averageFollowingCount: prevValue.averageFollowingCount + currValue.averageFollowingCount,
-        protectedCount: {
-            are: prevValue.protectedCount.are + currValue.protectedCount.are,
-            areNot: prevValue.protectedCount.areNot + currValue.protectedCount.areNot,
+        general: {
+            averageFollowersCount: prevValue.general.averageFollowersCount + currValue.general.averageFollowersCount,
+            averageFollowingCount: prevValue.general.averageFollowingCount + currValue.general.averageFollowingCount,
+            protectedCount: {
+                are: prevValue.general.protectedCount.are + currValue.general.protectedCount.are,
+                areNot: prevValue.general.protectedCount.areNot + currValue.general.protectedCount.areNot,
+            },
+            verifiedCount: {
+                are: prevValue.general.verifiedCount.are + currValue.general.verifiedCount.are,
+                areNot: prevValue.general.verifiedCount.areNot + currValue.general.verifiedCount.areNot,
+            },
         },
-        verifiedCount: {
-            are: prevValue.verifiedCount.are + currValue.verifiedCount.are,
-            areNot: prevValue.verifiedCount.areNot + currValue.verifiedCount.areNot,
-        },
+        demographics: {},
     };
 };
 
@@ -117,18 +122,24 @@ export const register = (app: express.Application) => {
                             followerStats: result.followers
                                 .map(mapUserObjectToStatSlice(result.followers.length))
                                 .reduce(reduceSlicesToStats, {
-                                    averageFollowersCount: 0,
-                                    averageFollowingCount: 0,
-                                    protectedCount: { are: 0, areNot: 0 },
-                                    verifiedCount: { are: 0, areNot: 0 },
+                                    general: {
+                                        averageFollowersCount: 0,
+                                        averageFollowingCount: 0,
+                                        protectedCount: { are: 0, areNot: 0 },
+                                        verifiedCount: { are: 0, areNot: 0 },
+                                    },
+                                    demographics: null,
                                 }),
                             followingStats: result.following
                                 .map(mapUserObjectToStatSlice(result.following.length))
                                 .reduce(reduceSlicesToStats, {
-                                    averageFollowersCount: 0,
-                                    averageFollowingCount: 0,
-                                    protectedCount: { are: 0, areNot: 0 },
-                                    verifiedCount: { are: 0, areNot: 0 },
+                                    general: {
+                                        averageFollowersCount: 0,
+                                        averageFollowingCount: 0,
+                                        protectedCount: { are: 0, areNot: 0 },
+                                        verifiedCount: { are: 0, areNot: 0 },
+                                    },
+                                    demographics: null,
                                 }),
                         };
                         res.send(responseData);
