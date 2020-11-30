@@ -3,7 +3,13 @@
     <button mat-menu-item (click)="statType = 'general'">General</button>
     <button mat-menu-item (click)="statType = 'demographics'">Demographics</button>
 </mat-menu>
-<ng-container [ngSwitch]="statType">
-    <app-advanced-general-stats *ngSwitchCase="statType === 'general'"></app-advanced-general-stats>
-    <app-advanced-demographic-stats *ngSwitchCase="statType === 'demographics'"></app-advanced-demographic-stats>
-</ng-container>
+<app-advanced-general-stats
+    *ngIf="statType === 'general'"
+    [followerGeneralStats]="advancedStats.followerStats.general"
+    [followingGeneralStats]="advancedStats.followingStats.general"
+></app-advanced-general-stats>
+<app-advanced-demographic-stats
+    *ngIf="statType === 'demographics'"
+    [followerDemographicStats]="advancedStats.followerStats.demographics"
+    [followingDemographicStats]="advancedStats.followingStats.demographics"
+></app-advanced-demographic-stats>

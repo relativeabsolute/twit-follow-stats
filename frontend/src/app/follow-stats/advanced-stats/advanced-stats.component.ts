@@ -12,9 +12,11 @@ export type StatType = 'general' | 'demographics';
 export class AdvancedStatsComponent implements OnInit {
     @Input() advancedStats: IAdvancedStatsObject;
 
-    statType: StatType = 'general';
+    statType: StatType;
 
     constructor() {}
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        this.statType = 'general';
+    }
 }

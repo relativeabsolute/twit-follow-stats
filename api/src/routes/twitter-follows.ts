@@ -117,6 +117,7 @@ export const register = (app: express.Application) => {
                 .getUserAdvancedStats(userId)
                 .pipe(catchError((err) => handleError(err, res)))
                 .subscribe((result: IAdvancedStatsInternalResponse) => {
+                    // TODO: refactor into separate method
                     if (result) {
                         const responseData: IAdvancedStatsResponse = {
                             followerStats: result.followers

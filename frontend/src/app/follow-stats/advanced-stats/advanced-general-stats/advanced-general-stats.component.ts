@@ -1,4 +1,6 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
+// TODO: TS aliases
+import { IAdvancedGeneralStats } from '../../../interfaces/advanced-stats-object';
 
 @Component({
     selector: 'app-advanced-general-stats',
@@ -7,6 +9,9 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AdvancedGeneralStatsComponent implements OnInit {
+    @Input() followerGeneralStats: IAdvancedGeneralStats;
+    @Input() followingGeneralStats: IAdvancedGeneralStats;
+
     constructor() {}
 
     ngOnInit(): void {}
