@@ -12,9 +12,27 @@ import { BasicStatsComponent } from './basic-stats/basic-stats.component';
 import { AdvancedStatsComponent } from './advanced-stats/advanced-stats.component';
 import { AdvancedGeneralStatsComponent } from './advanced-stats/advanced-general-stats/advanced-general-stats.component';
 import { AdvancedDemographicStatsComponent } from './advanced-stats/advanced-demographic-stats/advanced-demographic-stats.component';
+import { AdvancedGeneralStatsDisplayComponent } from './advanced-stats/advanced-general-stats/advanced-general-stats-display/advanced-general-stats-display.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @NgModule({
-    declarations: [FollowStatsComponent, BasicStatsComponent, AdvancedStatsComponent, AdvancedGeneralStatsComponent, AdvancedDemographicStatsComponent],
-    imports: [CommonModule, FollowStatsRoutingModule, MaterialModule, MatListModule, MatTabsModule, MatMenuModule, SharedModule],
+    declarations: [
+        FollowStatsComponent,
+        BasicStatsComponent,
+        AdvancedStatsComponent,
+        AdvancedGeneralStatsComponent,
+        AdvancedDemographicStatsComponent,
+        AdvancedGeneralStatsDisplayComponent,
+    ],
+    imports: [
+        CommonModule,
+        FollowStatsRoutingModule,
+        MaterialModule,
+        MatListModule,
+        MatTabsModule,
+        MatMenuModule,
+        SharedModule,
+        NgxChartsModule,
+    ],
 })
 export class FollowStatsModule {}

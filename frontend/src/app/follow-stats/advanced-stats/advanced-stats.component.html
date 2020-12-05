@@ -1,12 +1,19 @@
-<button mat-button [matMenuTriggerFor]="menu"><mat-icon>keyboard_arrow_down</mat-icon><span>Statistics Type</span></button>
-<mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="statType = 'general'">General</button>
+<button mat-button [matMenuTriggerFor]="rootMenu"><mat-icon>keyboard_arrow_down</mat-icon><span>Statistics Type</span></button>
+<mat-menu #rootMenu="matMenu">
+    <button mat-menu-item [matMenuTriggerFor]="generalMenu">General</button>
     <button mat-menu-item (click)="statType = 'demographics'">Demographics</button>
 </mat-menu>
+<mat-menu #generalMenu="matMenu">
+    <button mat-menu-item *ngFor="let type of generalStatTypeNames" (click)="setGeneralType($event, generalStatTypes[type])">
+        {{ type }}
+    </button>
+</mat-menu>
+<mat-menu #demographicsMenu="matMenu"> </mat-menu>
 <app-advanced-general-stats
     *ngIf="statType === 'general'"
     [followerGeneralStats]="advancedStats.followerStats.general"
     [followingGeneralStats]="advancedStats.followingStats.general"
+    [generalStatsType]="advancedGeneralType"
 ></app-advanced-general-stats>
 <app-advanced-demographic-stats
     *ngIf="statType === 'demographics'"

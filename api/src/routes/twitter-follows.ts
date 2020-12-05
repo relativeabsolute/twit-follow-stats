@@ -26,12 +26,12 @@ const mapUserObjectToStatSlice = (numUsers: number) => {
                 averageFollowersCount: userObject.followers_count / numUsers,
                 averageFollowingCount: userObject.friends_count / numUsers,
                 protectedCount: {
-                    are: userObject.protected ? 1 / numUsers : 0,
-                    areNot: !userObject.protected ? 1 / numUsers : 0,
+                    are: userObject.protected ? 1 : 0,
+                    areNot: !userObject.protected ? 1 : 0,
                 },
                 verifiedCount: {
-                    are: userObject.verified ? 1 / numUsers : 0,
-                    areNot: !userObject.verified ? 1 / numUsers : 0,
+                    are: userObject.verified ? 1 : 0,
+                    areNot: !userObject.verified ? 1 : 0,
                 },
             },
         };

@@ -1,0 +1,9 @@
+<ngx-charts-pie-chart
+    [results]="statsConfig.data"
+    [gradient]="statsConfig.gradient"
+    [legend]="statsConfig.showLegend"
+    [labels]="statsConfig.showLabels"
+    [legendPosition]="statsConfig.legendPosition"
+    [trimLabels]="statsConfig.trimLabels"
+    *ngIf="displayType === statTypes.protected || displayType === statTypes.verified"
+></ngx-charts-pie-chart>

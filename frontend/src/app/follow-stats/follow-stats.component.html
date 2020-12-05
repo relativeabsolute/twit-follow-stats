@@ -4,7 +4,7 @@
             <mat-card-title> Stats </mat-card-title>
             <mat-card-subtitle> Percentage of users followed / following who are mutuals. </mat-card-subtitle>
         </mat-card-header>
-        <mat-card-content *ngIf="stats">
+        <mat-card-content *ngIf="stats && advancedStats">
             <div fxLayout="row">
                 <div fxFlex="20"></div>
                 <mat-list fxFlex="60" fxLayout="row" fxLayoutAlign="center center">
